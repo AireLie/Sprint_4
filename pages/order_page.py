@@ -3,11 +3,9 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from locators.order_page_locators import OrderPageLocators
 from selenium.webdriver.common.keys import Keys
+from pages.main_page import MainPage
 
-class OrderPage:
-
-    def __init__(self, driver):
-        self.driver = driver
+class OrderPage(MainPage):
 
     def set_first_name(self, firstname):
         self.driver.find_element(*OrderPageLocators.LOCATOR_NAME).send_keys(firstname)

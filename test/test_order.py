@@ -1,7 +1,5 @@
 import allure
 import pytest
-from pages.base_page import BasePage
-from pages.main_page import MainPage
 from pages.order_page import OrderPage
 from url import Urls
 from data import Registration
@@ -16,11 +14,9 @@ class TestOrderButton:
     @allure.title('Оформление заказа по кнопке "Заказать" в шапке страницы')
     def test_order_button_on_header_passed(self, driver):
 
-        page = BasePage(driver)
-        page.open_page(Urls.MAIN_PAGE)
-        click_order_button = MainPage(driver)
-        click_order_button.click_order_button_in_header()
         order = OrderPage(driver)
+        order.open_page(Urls.MAIN_PAGE)
+        order.click_order_button_in_header()
         order.filling_form(Registration.fake_person_info(), PhoneNumber.get_phone_number())
         order.wait_for_rent_form()
         order.input_rental_information(Date.get_date_today(), RentalData.RENTAL_DATA_1)
@@ -34,12 +30,10 @@ class TestOrderButton:
     @allure.title('Оформить заказ по кнопке "Заказать" внизу страницы')
     def test_order_page_correct_user_data_passed(self, driver):
 
-        page = BasePage(driver)
-        page.open_page(Urls.MAIN_PAGE)
-        click_order_button = MainPage(driver)
-        click_order_button.scroll_to_order_button()
-        click_order_button.click_order_button()
         order = OrderPage(driver)
+        order.open_page(Urls.MAIN_PAGE)
+        order.scroll_to_order_button()
+        order.click_order_button_in_bottom()
         order.filling_form(Registration.fake_person_info(), PhoneNumber.get_phone_number())
         order.wait_for_rent_form()
         order.input_rental_information(Date.get_date_tomorrow(), RentalData.RENTAL_DATA_2)
@@ -54,11 +48,9 @@ class TestOrderButton:
     @allure.description('Некорректное Имя пользователя')
     def test_order_page_first_name_incorrect_show_error_message_failed(self, driver):
 
-        page = BasePage(driver)
-        page.open_page(Urls.MAIN_PAGE)
-        click_order_button = MainPage(driver)
-        click_order_button.click_order_button_in_header()
         order = OrderPage(driver)
+        order.open_page(Urls.MAIN_PAGE)
+        order.click_order_button_in_header()
         order.filling_incorrect_form(IncorrectData.INCORRECT_FIRSTNAME, PhoneNumber.get_phone_number())
         firstname_error_text = order.wait_for_error_message_firstname()
 
@@ -68,10 +60,9 @@ class TestOrderButton:
     @allure.description('Некорректная Фамилия пользователя')
     def test_order_page_last_name_incorrect_show_error_message_failed(self, driver):
 
-        page = BasePage(driver)
-        page.open_page(Urls.MAIN_PAGE)
-        click_order_button = MainPage(driver)
-        click_order_button.click_order_button_in_header()
+        order = OrderPage(driver)
+        order.open_page(Urls.MAIN_PAGE)
+        order.click_order_button_in_header()
         order = OrderPage(driver)
         order.filling_incorrect_form(IncorrectData.INCORRECT_LASTNAME, PhoneNumber.get_phone_number())
         lastname_error_text = order.wait_for_error_message_lastname()
@@ -82,10 +73,9 @@ class TestOrderButton:
     @allure.description('Некорректный адрес пользователя')
     def test_order_page_address_incorrect_show_error_message_failed(self, driver):
 
-        page = BasePage(driver)
-        page.open_page(Urls.MAIN_PAGE)
-        click_order_button = MainPage(driver)
-        click_order_button.click_order_button_in_header()
+        order = OrderPage(driver)
+        order.open_page(Urls.MAIN_PAGE)
+        order.click_order_button_in_header()
         order = OrderPage(driver)
         order.filling_incorrect_form(IncorrectData.INCORRECT_ADDRESS, PhoneNumber.get_phone_number())
         address_error_text = order.wait_for_error_message_address()
@@ -96,10 +86,9 @@ class TestOrderButton:
     @allure.description('Некорректный номер телефона пользователя')
     def test_order_page_phone_number_incorrect_show_error_message_failed(self, driver):
 
-        page = BasePage(driver)
-        page.open_page(Urls.MAIN_PAGE)
-        click_order_button = MainPage(driver)
-        click_order_button.click_order_button_in_header()
+        order = OrderPage(driver)
+        order.open_page(Urls.MAIN_PAGE)
+        order.click_order_button_in_header()
         order = OrderPage(driver)
         order.filling_incorrect_form(Registration.fake_person_info(), PhoneNumber.get_incorrect_phone_number())
         phonenumber_error_text = order.wait_for_error_message_phonenumber()
